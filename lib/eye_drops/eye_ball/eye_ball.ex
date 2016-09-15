@@ -12,14 +12,14 @@ defmodule EyeDrops.EyeBall do
   end
 
   def run_on_start(server) do
-    GenServer.call(server, :run_on_start)
+    GenServer.call(server, :run_on_start, 30_000)
   end
 
   # GenServer implementation
   def init(tasks) do
     :ok = :fs.subscribe
     include_list = Map.get(tasks, :include_tasks, [])
-    
+
     tasks = case include_list do
       list when list == [] -> Tasks.get
       list -> Tasks.get(list)
@@ -51,5 +51,5 @@ defmodule EyeDrops.EyeBall do
       _ -> finish
       after 0 -> :ok
     end
-  end 
+  end
 end
