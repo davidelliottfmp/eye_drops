@@ -4,7 +4,7 @@ defmodule EyeDrops.Commands do
   @switches [:include_tasks]
 
   def parse([]), do: {:ok, %{}}
-  
+
   def parse(args) do
     {arg_list, _, _} = OptionParser.parse(args)
 
@@ -18,7 +18,8 @@ defmodule EyeDrops.Commands do
   end
 
   def watch() do
-    task_id = IO.gets ""
+    :timer.sleep(500)
+    task_id = ""
     rerun(task_id)
     watch
   end
@@ -41,7 +42,7 @@ defmodule EyeDrops.Commands do
   end
 
   defp validate_switches!(arg_list) do
-    Enum.each(arg_list, fn {switch,value} -> 
+    Enum.each(arg_list, fn {switch,value} ->
       if !switch in @switches do
         [argv_switch,_] = OptionParser.to_argv([{switch, value}])
         raise SwitchError, message: "Invalid parameter " <> argv_switch
